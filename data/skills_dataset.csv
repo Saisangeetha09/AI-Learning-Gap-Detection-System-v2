@@ -1,0 +1,41 @@
+skill_name,category,difficulty_level,subtopics,prerequisites,learning_time_days,resource_link
+Python,Programming,Beginner,Variables;Loops;Functions,Logic Building,30,https://python.org
+Java,Programming,Intermediate,OOP;Collections;Streams,Programming Basics,40,https://www.oracle.com/java/
+JavaScript,Web Development,Beginner,DOM;ES6;Functions,HTML;CSS,25,https://developer.mozilla.org
+React,Web Development,Intermediate,Hooks;Components;State,JavaScript;HTML;CSS,35,https://react.dev
+Node.js,Backend,Intermediate,Express;APIs;Middleware,JavaScript,30,https://nodejs.org
+SQL,Database,Beginner,Queries;Joins;Indexes,Computer Basics,20,https://www.mysql.com
+MongoDB,Database,Intermediate,CRUD;Aggregation,Database Basics,25,https://www.mongodb.com
+Machine Learning,AI,Intermediate,Regression;Classification,Python;Statistics,60,https://scikit-learn.org
+Deep Learning,AI,Advanced,CNN;RNN;Transformers,Machine Learning,90,https://pytorch.org
+Generative AI,GenAI,Advanced,LLMs;Prompting;RAG,Deep Learning;NLP,70,https://huggingface.co
+Prompt Engineering,GenAI,Beginner,Zero-shot;Few-shot,LLM Basics,15,https://platform.openai.com
+LangChain,GenAI,Intermediate,Chains;Agents;Memory,Python;LLMs,25,https://python.langchain.com
+LlamaIndex,GenAI,Intermediate,Indexes;Retrieval,Python;RAG,20,https://www.llamaindex.ai
+ChromaDB,GenAI,Intermediate,Vector Storage;Embeddings,Python,15,https://www.trychroma.com
+FAISS,GenAI,Intermediate,Similarity Search,Embeddings,20,https://faiss.ai
+TensorFlow,AI,Intermediate,Keras;Neural Networks,Python,45,https://tensorflow.org
+PyTorch,AI,Intermediate,Autograd;Models,Python,45,https://pytorch.org
+NLP,AI,Intermediate,Tokenization;NER,Python;ML,40,https://huggingface.co
+Computer Vision,AI,Intermediate,Image Processing;CNN,Python;ML,50,https://opencv.org
+Docker,DevOps,Intermediate,Containers;Images,Linux Basics,25,https://docker.com
+Kubernetes,DevOps,Advanced,Pods;Deployments,Docker,50,https://kubernetes.io
+AWS,Cloud,Intermediate,EC2;S3;IAM,Linux;Networking,45,https://aws.amazon.com
+Azure,Cloud,Intermediate,VMs;Storage,Cloud Basics,40,https://azure.microsoft.com
+GCP,Cloud,Intermediate,Compute Engine;BigQuery,Cloud Basics,40,https://cloud.google.com
+Git,Development Tools,Beginner,Commits;Branches,Programming Basics,10,https://git-scm.com
+Linux,Operating Systems,Beginner,Commands;Shell,Computer Basics,20,https://ubuntu.com
+Data Structures,Programming,Intermediate,Arrays;Trees;Graphs,Programming Basics,45,https://geeksforgeeks.org
+Algorithms,Programming,Intermediate,Sorting;Searching,Data Structures,45,https://cp-algorithms.com
+Pandas,Data Science,Beginner,DataFrames;Cleaning,Python,20,https://pandas.pydata.org
+NumPy,Data Science,Beginner,Arrays;Broadcasting,Python,15,https://numpy.org
+Matplotlib,Data Science,Beginner,Plots;Charts,Python,10,https://matplotlib.org
+Seaborn,Data Science,Beginner,Statistical Charts,Matplotlib,10,https://seaborn.pydata.org
+Power BI,Analytics,Beginner,Dashboards;Reports,Excel;SQL,25,https://powerbi.microsoft.com
+Tableau,Analytics,Beginner,Visualizations;Dashboards,Excel;SQL,25,https://tableau.com
+FastAPI,Backend,Intermediate,REST APIs;Async,Python,25,https://fastapi.tiangolo.com
+Flask,Backend,Beginner,Routing;Templates,Python,20,https://flask.palletsprojects.com
+Streamlit,Web Apps,Beginner,Widgets;Dashboards,Python,10,https://streamlit.io
+Gradio,Web Apps,Beginner,Interfaces;Components,Python,10,https://gradio.app
+Apache Spark,Data Engineering,Advanced,RDDs;Spark SQL,Python;SQL,60,https://spark.apache.org
+Kafka,Data Engineering,Advanced,Streams;Topics,Distributed Systems,50,https://kafka.apache.org

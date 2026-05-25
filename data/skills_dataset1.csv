@@ -1,0 +1,41 @@
+skill_name,category,difficulty_level,prerequisites,learning_time_days
+Python,Programming,Beginner,Logic Building,30
+SQL,Database,Beginner,Basic Computer Knowledge,20
+Machine Learning,AI,Intermediate,"Python, Statistics",60
+Deep Learning,AI,Advanced,"Machine Learning, Python",90
+Docker,DevOps,Intermediate,Linux Basics,25
+Git,Development Tools,Beginner,Basic Programming,7
+Linux,Operating Systems,Beginner,Computer Basics,20
+Pandas,Data Science,Beginner,Python,15
+NumPy,Data Science,Beginner,Python,10
+Power BI,Analytics,Beginner,"Excel, SQL",20
+Tableau,Analytics,Beginner,"Excel, SQL",20
+Statistics,Mathematics,Beginner,Basic Math,30
+Data Structures,Programming,Intermediate,Programming Basics,45
+Algorithms,Programming,Intermediate,Data Structures,45
+TensorFlow,AI,Intermediate,"Python, Deep Learning",40
+PyTorch,AI,Intermediate,"Python, Deep Learning",40
+Natural Language Processing,AI,Intermediate,"Python, Machine Learning",50
+Computer Vision,AI,Intermediate,"Python, Machine Learning",50
+Generative AI,AI,Advanced,"Deep Learning, NLP",70
+Prompt Engineering,GenAI,Beginner,LLM Basics,10
+LangChain,GenAI,Intermediate,"Python, LLM Basics",20
+LlamaIndex,GenAI,Intermediate,"Python, RAG Basics",20
+ChromaDB,GenAI,Intermediate,"Python, Embeddings",15
+FAISS,GenAI,Intermediate,"Python, Vector Search",15
+RAG,GenAI,Intermediate,"LLMs, Embeddings",25
+Embeddings,GenAI,Intermediate,"Python, NLP",15
+Streamlit,Web Apps,Beginner,Python,10
+Gradio,Web Apps,Beginner,Python,7
+Flask,Backend,Intermediate,Python,20
+FastAPI,Backend,Intermediate,Python,20
+MongoDB,Database,Intermediate,Database Basics,20
+MySQL,Database,Beginner,SQL,15
+Data Visualization,Analytics,Beginner,"Python, Pandas",15
+Matplotlib,Data Science,Beginner,"Python, Data Visualization",10
+Seaborn,Data Science,Beginner,"Python, Matplotlib",7
+Scikit-learn,AI,Intermediate,"Python, Statistics",30
+Hugging Face,GenAI,Intermediate,"Python, NLP",25
+LLMs,GenAI,Intermediate,"Deep Learning, NLP",40
+Vector Databases,GenAI,Intermediate,"Embeddings, Databases",20
+API Integration,Development,Beginner,Python,10
