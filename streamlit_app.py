@@ -46,15 +46,17 @@ embedding_model = load_embedding_model()
 # =========================================
 # CACHE CHROMADB CLIENT
 # =========================================
-@st.cache_resource
-def load_chroma():
+# @st.cache_resource
+# def load_chroma():
 
-    return chromadb.PersistentClient(path="chroma_db")
+#     return chromadb.PersistentClient(path="chroma_db")
 
-client = load_chroma()
+# client = load_chroma()
 
 #collection = client.get_or_create_collection(name="skills")
+from rag_pipeline import load_chroma
 
+collection = load_chroma()
 # =========================================
 # LOAD DATASET
 # =========================================
