@@ -8,7 +8,7 @@ from graphviz import Digraph
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-from rag_pipeline import load_chroma
+#from rag_pipeline import load_chroma
 from database import *
 
 # =========================================
@@ -55,7 +55,7 @@ embedding_model = load_embedding_model()
 
 #collection = client.get_or_create_collection(name="skills")
 
-collection = load_chroma()
+#collection = load_chroma()
 # =========================================
 # LOAD DATASET
 # =========================================
@@ -303,27 +303,38 @@ else:
         # =========================================
         def retrieve_context(topic):
 
-            query_embedding = embedding_model.encode(
-                [topic]
-            ).tolist()[0]
+            filtered = df[
+                df["skill_name"].str.contains(
+                    topic,
+                    case=False,
+                    na=False
+                )
+            ]
 
-            results = collection.query(
-                query_embeddings=[query_embedding],
-                n_results=3
-            )
+            if filtered.empty:
+                filtered = df.head(5)
 
-            docs = results["documents"][0]
+            context = ""
 
-            return "\n".join(docs)
+            for _, row in filtered.iterrows():
 
-        # =========================================
-        # GENERATE MCQS
-        # =========================================
-        def generate_mcqs(
-            topic,
-            difficulty,
-            question_count
-        ):
+                context += f"""
+                Skill: {row['skill_name']}
+                Category: {row['category']}
+                Difficulty: {row['difficulty_level']}
+                Prerequisites: {row['prerequisites']}
+                Learning Time: {row['learning_time_days']} days
+                """
+
+            return context
+                # =========================================
+                # GENERATE MCQS
+                # =========================================
+                def generate_mcqs(
+                    topic,
+                    difficulty,
+                    question_count
+                ):
 
             context = retrieve_context(topic)
 
