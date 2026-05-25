@@ -11,9 +11,16 @@ def load_chroma():
         path="./chroma_db"
     )
 
-    # Load collection
-    collection = client.get_or_create_collection(
-        name="skills"
-    )
+    # Load collection safely
+    try:
+        collection = client.get_collection(
+            name="skills"
+        )
+
+    except:
+
+        collection = client.create_collection(
+            name="skills"
+        )
 
     return collection

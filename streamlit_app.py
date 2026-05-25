@@ -54,7 +54,6 @@ embedding_model = load_embedding_model()
 # client = load_chroma()
 
 #collection = client.get_or_create_collection(name="skills")
-from rag_pipeline import load_chroma
 
 collection = load_chroma()
 # =========================================
