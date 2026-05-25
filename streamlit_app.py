@@ -1,14 +1,11 @@
 import os
 import re
-#import chromadb
 import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 from graphviz import Digraph
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-#from rag_pipeline import load_chroma
 from database import *
 
 # =========================================
@@ -16,7 +13,7 @@ from database import *
 # =========================================
 st.set_page_config(
     page_title="AI Learning Gap Detection System",
-    page_icon=".",
+    page_icon="🎓",
     layout="wide"
 )
 
@@ -33,29 +30,6 @@ client_ai = OpenAI(
     base_url="https://openrouter.ai/api/v1"
 )
 
-# =========================================
-# CACHE EMBEDDING MODEL
-# =========================================
-@st.cache_resource
-def load_embedding_model():
-
-    return SentenceTransformer("all-MiniLM-L6-v2")
-
-embedding_model = load_embedding_model()
-
-# =========================================
-# CACHE CHROMADB CLIENT
-# =========================================
-# @st.cache_resource
-# def load_chroma():
-
-#     return chromadb.PersistentClient(path="chroma_db")
-
-# client = load_chroma()
-
-#collection = client.get_or_create_collection(name="skills")
-
-#collection = load_chroma()
 # =========================================
 # LOAD DATASET
 # =========================================
@@ -206,32 +180,16 @@ else:
         st.sidebar.markdown("## Analytics")
 
         st.sidebar.write(
-            f"Total Number Of Tests Taken: {total_attempts}"
+            f"Total Tests Taken: {total_attempts}"
         )
 
-        if best_score is not None:
+        st.sidebar.write(
+            f"Best Score: {best_score if best_score else 0}"
+        )
 
-            st.sidebar.write(
-                f"Best Score: {best_score}"
-            )
-
-        else:
-
-            st.sidebar.write(
-                "Best Score: 0"
-            )
-
-        if avg_score is not None:
-
-            st.sidebar.write(
-                f"Average Score: {round(avg_score, 2)}"
-            )
-
-        else:
-
-            st.sidebar.write(
-                "Average Score: 0"
-            )
+        st.sidebar.write(
+            f"Average Score: {round(avg_score, 2) if avg_score else 0}"
+        )
 
     # =========================================
     # QUIZ HISTORY
@@ -254,17 +212,16 @@ else:
         st.session_state.show_quiz = True
 
     # =========================================
-    # SHOW DASHBOARD
+    # DASHBOARD
     # =========================================
     if not st.session_state.show_quiz:
 
         st.subheader(
-            f" Welcome {st.session_state.username}"
+            f"Welcome {st.session_state.username}"
         )
 
         st.info(
-            "Click 'Take Quiz' in sidebar "
-            "to start assessment."
+            "Click 'Take Quiz' in sidebar to start assessment."
         )
 
     # =========================================
@@ -272,25 +229,16 @@ else:
     # =========================================
     if st.session_state.show_quiz:
 
-        # =========================================
-        # TOPIC DROPDOWN
-        # =========================================
         topic = st.sidebar.selectbox(
             "Select Topic",
             topics
         )
 
-        # =========================================
-        # DIFFICULTY
-        # =========================================
         difficulty = st.sidebar.selectbox(
             "Select Difficulty",
             ["Beginner", "Intermediate", "Advanced"]
         )
 
-        # =========================================
-        # QUESTION COUNT
-        # =========================================
         question_count = st.sidebar.slider(
             "Number of Questions",
             5,
@@ -327,14 +275,15 @@ else:
                 """
 
             return context
-                # =========================================
-                # GENERATE MCQS
-                # =========================================
-                def generate_mcqs(
-                    topic,
-                    difficulty,
-                    question_count
-                ):
+
+        # =========================================
+        # GENERATE MCQS
+        # =========================================
+        def generate_mcqs(
+            topic,
+            difficulty,
+            question_count
+        ):
 
             context = retrieve_context(topic)
 
@@ -379,13 +328,11 @@ else:
 
             text = response.choices[0].message.content
 
-            # Extract answers
             answers = re.findall(
                 r"Correct Answer:\s*([A-D])",
                 text
             )
 
-            # Remove answers
             clean_text = re.sub(
                 r"Correct Answer:\s*[A-D]",
                 "",
@@ -430,9 +377,7 @@ else:
         # =========================================
         if st.sidebar.button("Generate MCQs"):
 
-            with st.spinner(
-                "Generating Quiz..."
-            ):
+            with st.spinner("Generating Quiz..."):
 
                 mcqs, answers = generate_mcqs(
                     topic,
@@ -472,54 +417,19 @@ else:
                     ]
 
                     question = ""
-
                     options = []
 
                     for line in lines:
 
-                        line = line.strip()
-
-                        # Detect question
-                        if re.match(
-                            r"^\d+\.",
-                            line
-                        ):
+                        if re.match(r"^\d+\.", line):
                             question = line
 
-                        # Backup detection
-                        elif not line.startswith(
-                            (
-                                "A)",
-                                "B)",
-                                "C)",
-                                "D)"
-                            )
-                        ) and question == "":
-                            question = line
-
-                        # Detect options
                         elif line.startswith(
-                            (
-                                "A)",
-                                "B)",
-                                "C)",
-                                "D)"
-                            )
+                            ("A)", "B)", "C)", "D)")
                         ):
                             options.append(line)
 
-                    # Show question
-                    if question:
-
-                        st.markdown(
-                            f"### {question}"
-                        )
-
-                    else:
-
-                        st.markdown(
-                            f"### Question {q_count}"
-                        )
+                    st.markdown(f"### {question}")
 
                     answer = st.radio(
                         f"Select answer for Question {q_count}",
@@ -527,9 +437,7 @@ else:
                         key=f"q_{q_count}"
                     )
 
-                    user_answers.append(
-                        answer[0]
-                    )
+                    user_answers.append(answer[0])
 
             # =========================================
             # SUBMIT QUIZ
@@ -537,35 +445,22 @@ else:
             if st.button("Submit Quiz"):
 
                 score = 0
-
                 weak_areas = []
 
-                correct_answers = (
-                    st.session_state.answers
-                )
+                correct_answers = st.session_state.answers
 
-                for i in range(
-                    len(correct_answers)
-                ):
+                for i in range(len(correct_answers)):
 
-                    if (
-                        user_answers[i]
-                        ==
-                        correct_answers[i]
-                    ):
+                    if user_answers[i] == correct_answers[i]:
 
                         score += 1
 
                     else:
 
-                        # Store actual weak question
                         weak_areas.append(
                             questions[i]
                         )
 
-                # =========================================
-                # SAVE SCORE
-                # =========================================
                 save_score(
                     st.session_state.username,
                     topic,
@@ -574,25 +469,18 @@ else:
                     question_count
                 )
 
-                # =========================================
-                # SCORE
-                # =========================================
                 st.success(
-                    f"Score: "
-                    f"{score}/{question_count}"
+                    f"Score: {score}/{question_count}"
                 )
 
                 # =========================================
-                # PERFORMANCE PIE CHART
+                # PIE CHART
                 # =========================================
                 fig, ax = plt.subplots(
                     figsize=(3, 3)
                 )
 
-                labels = [
-                    "Correct",
-                    "Wrong"
-                ]
+                labels = ["Correct", "Wrong"]
 
                 values = [
                     score,
@@ -600,11 +488,10 @@ else:
                 ]
 
                 colors = [
-                    "#57d775",   # green
-                    "#ed5b69"    # red
+                    "#57d775",
+                    "#ed5b69"
                 ]
 
-                # Small explode effect
                 explode = (0.05, 0.05)
 
                 ax.pie(
@@ -613,42 +500,32 @@ else:
                     colors=colors,
                     autopct='%1.1f%%',
                     startangle=90,
-                    explode=explode,
-                    textprops={
-                        'fontsize': 10
-                    }
+                    explode=explode
                 )
 
                 ax.axis('equal')
 
-                # REMOVE extra white space
-                plt.tight_layout()
-
-                # Display SMALLER chart
                 st.pyplot(
                     fig,
                     use_container_width=False
                 )
+
                 # =========================================
                 # WEAK AREAS
                 # =========================================
-                st.subheader(
-                    "Weak Areas"
-                )
+                st.subheader("Weak Areas")
 
                 if weak_areas:
 
                     for area in weak_areas:
 
-                        # Extract question only
                         weak_topic = area.split("\n")[0]
 
                         st.write(f"• {weak_topic}")
+
                 else:
 
-                    st.write(
-                        "Excellent Performance!"
-                    )
+                    st.write("Excellent Performance!")
 
                 # =========================================
                 # ROADMAP
@@ -662,25 +539,18 @@ else:
                     ", ".join(weak_areas)
                 )
 
-                # =========================================
-                # SHOW ROADMAP TEXT
-                # =========================================
                 st.markdown(roadmap)
 
                 # =========================================
-                # FLOWCHART ROADMAP
+                # FLOWCHART
                 # =========================================
-                st.subheader(
-                    "📌 Learning Flowchart"
-                )
+                st.subheader("📌 Learning Flowchart")
 
                 steps = roadmap.split("\n")
 
                 flow = Digraph()
 
-                flow.attr(
-                    rankdir='TB'
-                )
+                flow.attr(rankdir='TB')
 
                 previous_node = None
 
@@ -715,8 +585,9 @@ else:
                         previous_node = node_name
 
                 st.graphviz_chart(flow)
+
                 # =========================================
-                # RESOURCE RECOMMENDATIONS
+                # RESOURCES
                 # =========================================
                 st.subheader("📚 Recommended Resources")
 
@@ -741,5 +612,5 @@ st.markdown("---")
 
 st.markdown(
     """AI-Powered Adaptive Learning Platform  
-Built with Streamlit • ChromaDB • SQLite • OpenRouter"""
+Built with Streamlit • SQLite • OpenRouter"""
 )
