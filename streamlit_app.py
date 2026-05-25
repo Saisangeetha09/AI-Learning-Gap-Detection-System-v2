@@ -1,6 +1,6 @@
 import os
 import re
-import chromadb
+#import chromadb
 import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -8,7 +8,7 @@ from graphviz import Digraph
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-
+from rag_pipeline import load_chroma
 from database import *
 
 # =========================================
@@ -53,7 +53,7 @@ def load_chroma():
 
 client = load_chroma()
 
-collection = client.get_or_create_collection(name="skills")
+#collection = client.get_or_create_collection(name="skills")
 
 # =========================================
 # LOAD DATASET
