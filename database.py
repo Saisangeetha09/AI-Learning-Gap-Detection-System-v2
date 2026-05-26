@@ -16,8 +16,7 @@ cursor = conn.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
 
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
+    username TEXT PRIMARY KEY,
     password TEXT
 )
 """)
@@ -28,12 +27,11 @@ CREATE TABLE IF NOT EXISTS users (
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS scores (
 
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT,
     topic TEXT,
     difficulty TEXT,
     score INTEGER,
-    total_questions INTEGER
+    total INTEGER
 )
 """)
 
@@ -47,7 +45,7 @@ def add_user(username, password):
     try:
 
         cursor.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
+            "INSERT INTO users VALUES (?, ?)",
             (username, password)
         )
 
@@ -81,57 +79,34 @@ def save_score(
     topic,
     difficulty,
     score,
-    total_questions
+    total
 ):
 
     cursor.execute(
-        """
-        INSERT INTO scores (
-            username,
-            topic,
-            difficulty,
-            score,
-            total_questions
-        )
-
-        VALUES (?, ?, ?, ?, ?)
-        """,
-
+        "INSERT INTO scores VALUES (?, ?, ?, ?, ?)",
         (
             username,
             topic,
             difficulty,
             score,
-            total_questions
+            total
         )
     )
 
     conn.commit()
 
 # =========================================
-# GET USER SCORES
+# GET SCORES
 # =========================================
 def get_scores(username):
 
     cursor.execute(
-        """
-        SELECT
-            topic,
-            difficulty,
-            score,
-            total_questions
-
-        FROM scores
-
-        WHERE username=?
-        """,
-
+        "SELECT topic, difficulty, score, total FROM scores WHERE username=?",
         (username,)
     )
 
-    data = cursor.fetchall()
+    return cursor.fetchall()
 
-    return data
 # =========================================
 # GET ANALYTICS
 # =========================================
@@ -143,15 +118,10 @@ def get_user_analytics(username):
             AVG(score),
             MAX(score),
             COUNT(*)
-
         FROM scores
-
         WHERE username=?
         """,
-
         (username,)
     )
 
-    data = cursor.fetchone()
-
-    return data
+    return cursor.fetchone()
